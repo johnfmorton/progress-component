@@ -7,9 +7,13 @@ export declare class ProgressComponent extends LitElement {
     message: string;
     success: boolean;
     count: number;
+    private isExpanded;
+    private messageHistory;
     get calculatedStrokeWidth(): number;
+    updated(changedProperties: Map<string | number | symbol, unknown>): void;
+    private updateMessageHistory;
+    private toggleExpand;
     render(): import("lit-html").TemplateResult<1>;
-    displaySuccess(success: boolean): "Success" | "Failure";
     private displayProgress;
 }
 declare global {

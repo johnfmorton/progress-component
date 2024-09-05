@@ -1,16 +1,21 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 
 @customElement('progress-component')
 export class ProgressComponent extends LitElement {
   static override styles = css`
     :host {
       display: flex;
-      flex-direction: row;
-      align-items: center;
+      flex-direction: column;
       border: solid 1px gray;
       padding: 8px 10px;
       max-width: 800px;
+      overflow: hidden;
+    }
+    .first-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       gap: 10px;
     }
     circle {
@@ -22,7 +27,23 @@ export class ProgressComponent extends LitElement {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-      max-width: calc(100% - 20px); /* Adjusts the width dynamically */
+      cursor: pointer;
+    }
+    .history {
+      display: flex;
+      flex-direction: column;
+
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      white-space: normal;
+      font-size: 0.8em;
+    }
+    .history div {
+      margin: 5px 0;
+    }
+    .history.expanded {
+      max-height: 500px; /* Limit expansion height, you can adjust this */
     }
   `;
 
@@ -44,21 +65,50 @@ export class ProgressComponent extends LitElement {
   @property({ type: Number })
   count = 0;
 
-  // Calculate the strokeWidth, defaulting to 1/2 of the size if not provided
+  @state()
+  private isExpanded = false;
+
+  @state()
+  private messageHistory: string[] = [];
+
+  // Calculate the strokeWidth, defaulting to 1/3 of the size if not provided
   get calculatedStrokeWidth() {
-    const defaultStrokeWidth = this.size / 2; // Changed to 1/2 of the size
+    const defaultStrokeWidth = this.size / 3;
     return this.strokeWidth > 0
       ? Math.min(this.strokeWidth, defaultStrokeWidth)
       : defaultStrokeWidth;
   }
 
+  override updated(changedProperties: Map<string | number | symbol, unknown>) {
+    if (changedProperties.has('message')) {
+      this.updateMessageHistory();
+    }
+  }
+
+  // Method to update the message history
+  private updateMessageHistory() {
+    // Add new message to the history
+    if (this.message) {
+      this.messageHistory = [
+        ...this.messageHistory.slice(-24), // Keep only the last 24 messages
+        this.message,
+      ];
+    }
+  }
+
+  // Toggle between expanded and collapsed states
+  private toggleExpand() {
+    this.isExpanded = !this.isExpanded;
+  }
+
   override render() {
-    const radius = (this.size / 2) - (this.calculatedStrokeWidth / 2); // Account for stroke width in the radius calculation
+    const radius = (this.size / 2) - (this.calculatedStrokeWidth / 2);
     const circumference = 2 * Math.PI * radius;
     const progress = this.displayProgress(this.progress);
     const offset = circumference * (1 - progress);
 
     return html`
+    <div class="first-row">
       <div>
         <svg
           width="${this.size}px"
@@ -85,12 +135,16 @@ export class ProgressComponent extends LitElement {
           ></circle>
         </svg>
       </div>
-      <div class='message'>${this.message}</div>
+      <div class="message" @click="${this.toggleExpand}">
+        ${this.message}
+      </div>
+</div>
+      <div class="history ${this.isExpanded ? 'expanded' : ''}">
+        ${this.messageHistory.map(
+          (msg) => html`<div>${msg}</div>`
+        )}
+      </div>
     `;
-  }
-
-  displaySuccess(success: boolean) {
-    return success ? 'Success' : 'Failure';
   }
 
   private displayProgress(progress: number): number {

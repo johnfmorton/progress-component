@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 let ProgressComponent = class ProgressComponent extends LitElement {
     constructor() {
         super(...arguments);
@@ -15,20 +15,42 @@ let ProgressComponent = class ProgressComponent extends LitElement {
         this.message = 'Idle status';
         this.success = false;
         this.count = 0;
+        this.isExpanded = false;
+        this.messageHistory = [];
     }
-    // Calculate the strokeWidth, defaulting to 1/2 of the size if not provided
+    // Calculate the strokeWidth, defaulting to 1/3 of the size if not provided
     get calculatedStrokeWidth() {
-        const defaultStrokeWidth = this.size / 2; // Changed to 1/2 of the size
+        const defaultStrokeWidth = this.size / 3;
         return this.strokeWidth > 0
             ? Math.min(this.strokeWidth, defaultStrokeWidth)
             : defaultStrokeWidth;
     }
+    updated(changedProperties) {
+        if (changedProperties.has('message')) {
+            this.updateMessageHistory();
+        }
+    }
+    // Method to update the message history
+    updateMessageHistory() {
+        // Add new message to the history
+        if (this.message) {
+            this.messageHistory = [
+                ...this.messageHistory.slice(-24), // Keep only the last 24 messages
+                this.message,
+            ];
+        }
+    }
+    // Toggle between expanded and collapsed states
+    toggleExpand() {
+        this.isExpanded = !this.isExpanded;
+    }
     render() {
-        const radius = (this.size / 2) - (this.calculatedStrokeWidth / 2); // Account for stroke width in the radius calculation
+        const radius = (this.size / 2) - (this.calculatedStrokeWidth / 2);
         const circumference = 2 * Math.PI * radius;
         const progress = this.displayProgress(this.progress);
         const offset = circumference * (1 - progress);
         return html `
+    <div class="first-row">
       <div>
         <svg
           width="${this.size}px"
@@ -55,11 +77,14 @@ let ProgressComponent = class ProgressComponent extends LitElement {
           ></circle>
         </svg>
       </div>
-      <div class='message'>${this.message}</div>
+      <div class="message" @click="${this.toggleExpand}">
+        ${this.message}
+      </div>
+</div>
+      <div class="history ${this.isExpanded ? 'expanded' : ''}">
+        ${this.messageHistory.map((msg) => html `<div>${msg}</div>`)}
+      </div>
     `;
-    }
-    displaySuccess(success) {
-        return success ? 'Success' : 'Failure';
     }
     displayProgress(progress) {
         return Math.min(Math.max(progress, 0), 1);
@@ -68,11 +93,16 @@ let ProgressComponent = class ProgressComponent extends LitElement {
 ProgressComponent.styles = css `
     :host {
       display: flex;
-      flex-direction: row;
-      align-items: center;
+      flex-direction: column;
       border: solid 1px gray;
       padding: 8px 10px;
       max-width: 800px;
+      overflow: hidden;
+    }
+    .first-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       gap: 10px;
     }
     circle {
@@ -84,7 +114,23 @@ ProgressComponent.styles = css `
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-      max-width: calc(100% - 20px); /* Adjusts the width dynamically */
+      cursor: pointer;
+    }
+    .history {
+      display: flex;
+      flex-direction: column;
+
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      white-space: normal;
+      font-size: 0.8em;
+    }
+    .history div {
+      margin: 5px 0;
+    }
+    .history.expanded {
+      max-height: 500px; /* Limit expansion height, you can adjust this */
     }
   `;
 __decorate([
@@ -105,6 +151,12 @@ __decorate([
 __decorate([
     property({ type: Number })
 ], ProgressComponent.prototype, "count", void 0);
+__decorate([
+    state()
+], ProgressComponent.prototype, "isExpanded", void 0);
+__decorate([
+    state()
+], ProgressComponent.prototype, "messageHistory", void 0);
 ProgressComponent = __decorate([
     customElement('progress-component')
 ], ProgressComponent);
