@@ -1,8 +1,3 @@
-/**
- * @license
- * Copyright 2019 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,41 +6,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-/**
- * An example element.
- *
- * @fires count-changed - Indicates when the count changes
- * @slot - This element has a slot
- * @csspart button - The button
- */
 let ProgressComponent = class ProgressComponent extends LitElement {
     constructor() {
         super(...arguments);
         this.progress = 0;
-        // Size of the SVG in pixels
         this.size = 100;
+        this.strokeWidth = 0;
         this.message = 'Idle status';
         this.success = false;
-        /**
-         * The number of times the button has been clicked.
-         */
         this.count = 0;
     }
+    // Calculate the strokeWidth, defaulting to 1/2 of the size if not provided
+    get calculatedStrokeWidth() {
+        const defaultStrokeWidth = this.size / 2; // Changed to 1/2 of the size
+        return this.strokeWidth > 0
+            ? Math.min(this.strokeWidth, defaultStrokeWidth)
+            : defaultStrokeWidth;
+    }
     render() {
-        // Calculate radius based on the size, with padding for stroke width
-        const radius = (this.size / 2) - 4; // Subtract stroke width from size to fit within SVG
+        const radius = (this.size / 2) - (this.calculatedStrokeWidth / 2); // Account for stroke width in the radius calculation
         const circumference = 2 * Math.PI * radius;
         const progress = this.displayProgress(this.progress);
         const offset = circumference * (1 - progress);
         return html `
       <div>
-        <svg width="${this.size}px" height="${this.size}px">
+        <svg
+          width="${this.size}px"
+          height="${this.size}px"
+          viewBox="0 0 ${this.size} ${this.size}"
+        >
           <circle
             cx="${this.size / 2}"
             cy="${this.size / 2}"
             r="${radius}"
             stroke="#b9b9b9"
-            stroke-width="4"
+            stroke-width="${this.calculatedStrokeWidth}"
             fill="transparent"
           ></circle>
           <circle
@@ -53,40 +48,20 @@ let ProgressComponent = class ProgressComponent extends LitElement {
             cy="${this.size / 2}"
             r="${radius}"
             stroke="#3f3f3f"
-            stroke-width="4"
+            stroke-width="${this.calculatedStrokeWidth}"
             fill="transparent"
             stroke-dasharray="${circumference}"
             stroke-dashoffset="${offset}"
           ></circle>
         </svg>
       </div>
-      <div>${this.message}</div>
+      <div class='message'>${this.message}</div>
     `;
     }
-    /**
-     * Displays success or failure
-     * @param success The status of the operation
-     * @returns Success or Failure
-     */
     displaySuccess(success) {
-        let display = '';
-        if (success === true) {
-            // this.success = true;
-            display = 'Success';
-        }
-        else {
-            // this.success = false;
-            display = 'Failure';
-        }
-        return display;
+        return success ? 'Success' : 'Failure';
     }
-    /**
-     * Displays the progress
-     * @param progressValue The progress of the operation
-     * @returns The progress
-     */
     displayProgress(progress) {
-        // Ensure the progress is between 0 and 1
         return Math.min(Math.max(progress, 0), 1);
     }
 };
@@ -96,7 +71,7 @@ ProgressComponent.styles = css `
       flex-direction: row;
       align-items: center;
       border: solid 1px gray;
-      padding: 16px;
+      padding: 8px 10px;
       max-width: 800px;
       gap: 10px;
     }
@@ -105,6 +80,12 @@ ProgressComponent.styles = css `
       transform: rotate(-90deg);
       transform-origin: 50% 50%;
     }
+    .message {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: calc(100% - 20px); /* Adjusts the width dynamically */
+    }
   `;
 __decorate([
     property({ type: Number })
@@ -112,6 +93,9 @@ __decorate([
 __decorate([
     property({ type: Number })
 ], ProgressComponent.prototype, "size", void 0);
+__decorate([
+    property({ type: Number })
+], ProgressComponent.prototype, "strokeWidth", void 0);
 __decorate([
     property({ type: String })
 ], ProgressComponent.prototype, "message", void 0);
