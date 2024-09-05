@@ -45,7 +45,7 @@ let ProgressComponent = class ProgressComponent extends LitElement {
         this.isExpanded = !this.isExpanded;
     }
     render() {
-        const radius = (this.size / 2) - (this.calculatedStrokeWidth / 2);
+        const radius = this.size / 2 - this.calculatedStrokeWidth / 2;
         const circumference = 2 * Math.PI * radius;
         const progress = this.displayProgress(this.progress);
         const offset = circumference * (1 - progress);

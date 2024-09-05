@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html>
   <head>
@@ -11,24 +11,42 @@
       * {
         font-family: sans-serif;
       }
-
-      {# p {
-        border: solid 1px blue;
-        padding: 8px;
-      } #}
     </style>
   </head>
   <body>
     <p>Hello world</p>
-    <progress-component progress="0.25" size="24" message="Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis n laborum."></progress-component>
+    <progress-component></progress-component>
 
-    <progress-component progress="0.75" size="150" strokeWidth="75" message="Loading..."></progress-component>
+    <progress-component
+      progress="0.25"
+      size="24"
+      message="Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis n laborum."
+    ></progress-component>
 
-    <progress-component style="--font-size: 16px; --color: #9d2f2f; --border-style: dashed; --border-radius: 60px 10px; --max-width:400px" progress="0" message="Loading...">
+    <progress-component
+      progress="0.75"
+      size="150"
+      strokeWidth="75"
+      message="Loading..."
+    ></progress-component>
+
+    <progress-component
+      style="
+        --font-size: 16px;
+        --color: #9d2f2f;
+        --border-style: dashed;
+        --border-radius: 60px 10px;
+        --max-width: 400px;
+      "
+      progress="0"
+      message="Loading..."
+    >
     </progress-component>
 
-
-
-    <progress-component progress="0.5" message="Error occurred" style="--bg-color: #ffcccc; --fg-color: #ff0000;"></progress-component>
+    <progress-component
+      progress="0.5"
+      message="Error occurred"
+      style="--bg-color: #ffcccc; --fg-color: #ff0000"
+    ></progress-component>
   </body>
 </html>

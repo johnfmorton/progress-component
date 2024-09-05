@@ -1,5 +1,5 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import {LitElement, html, css} from 'lit';
+import {customElement, property, state} from 'lit/decorators.js';
 
 @customElement('progress-component')
 export class ProgressComponent extends LitElement {
@@ -56,22 +56,22 @@ export class ProgressComponent extends LitElement {
     }
   `;
 
-  @property({ type: Number })
+  @property({type: Number})
   progress = 0;
 
-  @property({ type: Number })
+  @property({type: Number})
   size = 100;
 
-  @property({ type: Number })
+  @property({type: Number})
   strokeWidth = 0;
 
-  @property({ type: String })
+  @property({type: String})
   message = 'Idle status';
 
-  @property({ type: Boolean })
+  @property({type: Boolean})
   success = false;
 
-  @property({ type: Number })
+  @property({type: Number})
   count = 0;
 
   @state()
@@ -111,14 +111,16 @@ export class ProgressComponent extends LitElement {
   }
 
   override render() {
-    const radius = (this.size / 2) - (this.calculatedStrokeWidth / 2);
+    const radius = this.size / 2 - this.calculatedStrokeWidth / 2;
     const circumference = 2 * Math.PI * radius;
     const progress = this.displayProgress(this.progress);
     const offset = circumference * (1 - progress);
 
     return html`
     <div class="first-row">
-      <div role="progressbar" aria-valuenow="${this.progress * 100}" aria-valuemin="0" aria-valuemax="100" aria-label="Progress indicator">
+      <div role="progressbar" aria-valuenow="${
+        this.progress * 100
+      }" aria-valuemin="0" aria-valuemax="100" aria-label="Progress indicator">
         <svg
           width="${this.size}px"
           height="${this.size}px"
