@@ -61,7 +61,7 @@ let ProgressComponent = class ProgressComponent extends LitElement {
             cx="${this.size / 2}"
             cy="${this.size / 2}"
             r="${radius}"
-            stroke="var(--progress-component-bg-color, #b9b9b9)" /* Default background color */
+            stroke="var(--bg-color, #b9b9b9)" /* Default background color */
             stroke-width="${this.calculatedStrokeWidth}"
             fill="transparent"
           ></circle>
@@ -69,7 +69,7 @@ let ProgressComponent = class ProgressComponent extends LitElement {
             cx="${this.size / 2}"
             cy="${this.size / 2}"
             r="${radius}"
-            stroke="var(--progress-component-fg-color, #3f3f3f)" /* Default foreground color */
+            stroke="var(--fg-color, #3f3f3f)" /* Default foreground color */
             stroke-width="${this.calculatedStrokeWidth}"
             fill="transparent"
             stroke-dasharray="${circumference}"
@@ -109,14 +109,14 @@ ProgressComponent.styles = css `
     :host {
       display: flex;
       flex-direction: column;
-      border-radius: var(--progress-component-border-radius, 4px); /* Default border-radius */
+      border-radius: var(--border-radius, 4px); /* Default border-radius */
       border: solid 1px rgb(204, 204, 204); /* Default border color */
-      border-style: var(--progress-component-border-style, solid); /* Default border style */
+      border-style: var(--border-style, solid); /* Default border style */
       padding: 8px 10px;
-      max-width: var(--progress-component-max-width, 100%); /* Default max-width */
+      max-width: var(--max-width, 100%); /* Default max-width */
       overflow: hidden;
-      font-size: var(--progress-component-font-size, 14px); /* Default font-size */
-      color: var(--progress-component-color, rgb(89, 102, 115)); /* Default color */
+      font-size: var(--font-size, 14px); /* Default font-size */
+      color: var(--color, rgb(89, 102, 115)); /* Default color */
     }
     .first-row {
       display: flex;
