@@ -1,10 +1,10 @@
 {
-  "name": "@lit/lit-starter-ts",
-  "private": true,
-  "version": "2.0.2",
-  "description": "A simple web component",
+  "name": "progress-component",
+  "version": "0.1.0",
+  "description": "A web component used to report progress and a message that keeps a history of the last 25 messages.",
   "main": "progress-component.js",
   "module": "progress-component.js",
+  "types": "progress-component.d.ts",
   "type": "module",
   "scripts": {
     "build": "tsc",
