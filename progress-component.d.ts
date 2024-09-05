@@ -15,6 +15,7 @@ export declare class ProgressComponent extends LitElement {
     private toggleExpand;
     render(): import("lit-html").TemplateResult<1>;
     private displayProgress;
+    private handleKeydown;
 }
 declare global {
     interface HTMLElementTagNameMap {

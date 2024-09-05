@@ -20,9 +20,15 @@
   </head>
   <body>
     <p>Hello world</p>
-    <progress-component progress="0.25" size="24" message="Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></progress-component>
+    <progress-component progress="0.25" size="24" message="Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis n laborum."></progress-component>
 
     <progress-component progress="0.75" size="150" strokeWidth="75" message="Loading..."></progress-component>
 
+    <progress-component style="--progress-component-font-size: 16px; --progress-component-color: #9d2f2f; --progress-component-border-style: dashed; --progress-component-border-radius: 60px 10px; --progress-component-max-width:400px" progress="0" message="Loading...">
+    </progress-component>
+
+
+
+    <progress-component progress="0.5" message="Error occurred" style="--progress-component-bg-color: #ffcccc; --progress-component-fg-color: #ff0000;"></progress-component>
   </body>
 </html>
