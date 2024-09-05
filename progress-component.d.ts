@@ -13,21 +13,27 @@ import { LitElement } from 'lit';
  */
 export declare class ProgressComponent extends LitElement {
     static styles: import("lit").CSSResult;
-    /**
-     * The name to say "Hello" to.
-     */
-    name: string;
+    progress: number;
+    size: number;
+    message: string;
+    success: boolean;
     /**
      * The number of times the button has been clicked.
      */
     count: number;
     render(): import("lit-html").TemplateResult<1>;
-    private _onClick;
     /**
-     * Formats a greeting
-     * @param name The name to say "Hello" to
+     * Displays success or failure
+     * @param success The status of the operation
+     * @returns Success or Failure
      */
-    sayHello(name: string): string;
+    displaySuccess(success: boolean): string;
+    /**
+     * Displays the progress
+     * @param progressValue The progress of the operation
+     * @returns The progress
+     */
+    private displayProgress;
 }
 declare global {
     interface HTMLElementTagNameMap {
