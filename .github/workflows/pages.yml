@@ -29,17 +29,16 @@ jobs:
 
       - run: npx tsc
 
+      - run: npx rollup -c
+
       - name: Prepare Pages output
         run: |
-          mkdir -p _site/test/visual
-          cp -r test/visual/* _site/test/visual/
-          cp progress-component.js _site/
-          cp progress-component.js.map _site/
-          mkdir -p _site/node_modules/@webcomponents/webcomponentsjs
-          cp node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js _site/node_modules/@webcomponents/webcomponentsjs/
-          mkdir -p _site/node_modules/lit
-          cp node_modules/lit/polyfill-support.js _site/node_modules/lit/
-          echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=test/visual/"></head></html>' > _site/index.html
+          mkdir -p _site
+          cp test/visual/index.html _site/index.html
+          cp progress-component.bundled.js _site/
+          sed -i 's|<script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>||' _site/index.html
+          sed -i 's|<script src="../../node_modules/lit/polyfill-support.js"></script>||' _site/index.html
+          sed -i 's|../../progress-component.js|./progress-component.bundled.js|' _site/index.html
 
       - uses: actions/upload-pages-artifact@v3
 
