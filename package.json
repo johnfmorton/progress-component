@@ -1,6 +1,6 @@
 {
   "name": "progress-component",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A web component used to report progress and a message that keeps a history of the last 25 messages.",
   "main": "progress-component.js",
   "module": "progress-component.js",

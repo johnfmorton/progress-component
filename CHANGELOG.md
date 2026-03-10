@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-03-10
+
 ### Added
 
 - Expand/collapse arrow button for toggling message history
@@ -19,3 +21,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Removed
 
 - Inline CSS comments from SVG stroke attributes
+
+[0.2.0]: https://github.com/johnfmorton/progress-component/releases/tag/v0.2.0
