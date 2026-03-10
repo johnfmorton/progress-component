@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;progress-component&gt; Visual Test Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../node_modules/lit/polyfill-support.js"></script>
+    <script type="module" src="../../progress-component.js"></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 24px;
+        background: #f5f5f5;
+        color: #333;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
+      h2 {
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 8px;
+        margin-top: 40px;
+      }
+
+      .test-section {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 16px;
+      }
+
+      .test-section h3 {
+        margin-top: 0;
+        font-size: 14px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .controls {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 24px;
+      }
+
+      .controls label {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 14px;
+      }
+
+      .controls label span {
+        display: inline-block;
+        width: 120px;
+        font-weight: 600;
+      }
+
+      .controls input[type="range"] {
+        width: 200px;
+        vertical-align: middle;
+      }
+
+      .controls input[type="text"],
+      .controls input[type="number"] {
+        padding: 4px 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 200px;
+      }
+
+      .controls input[type="number"] {
+        width: 80px;
+      }
+
+      .controls button {
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #fff;
+        cursor: pointer;
+        margin-right: 8px;
+        margin-top: 8px;
+      }
+
+      .controls button:hover {
+        background: #eee;
+      }
+
+      .controls button.active {
+        background: #333;
+        color: #fff;
+        border-color: #333;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+      }
+
+      #animated-target {
+        transition: none;
+      }
+
+      .status {
+        font-size: 13px;
+        color: #888;
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>&lt;progress-component&gt; Visual Test Page</h1>
+    <p>
+      Interactive test page to verify the component works correctly after
+      dependency updates.
+    </p>
+
+    <!-- Section 1: Interactive Controls -->
+    <h2>1. Interactive Controls</h2>
+    <div class="controls">
+      <label>
+        <span>Progress:</span>
+        <input
+          type="range"
+          id="ctrl-progress"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.5"
+        />
+        <output id="ctrl-progress-val">0.5</output>
+      </label>
+      <label>
+        <span>Size:</span>
+        <input type="number" id="ctrl-size" value="100" min="10" max="300" />
+      </label>
+      <label>
+        <span>Stroke Width:</span>
+        <input
+          type="number"
+          id="ctrl-stroke"
+          value="0"
+          min="0"
+          max="150"
+        />
+      </label>
+      <label>
+        <span>Message:</span>
+        <input type="text" id="ctrl-message" value="Interactive test" />
+      </label>
+      <div>
+        <button id="btn-0">0%</button>
+        <button id="btn-25">25%</button>
+        <button id="btn-50">50%</button>
+        <button id="btn-75">75%</button>
+        <button id="btn-100">100%</button>
+        <button id="btn-animate">Animate 0→100%</button>
+      </div>
+    </div>
+    <div class="test-section">
+      <h3>Result</h3>
+      <progress-component
+        id="interactive"
+        progress="0.5"
+        message="Interactive test"
+      ></progress-component>
+    </div>
+
+    <!-- Section 2: Static Variations -->
+    <h2>2. Property Variations</h2>
+    <div class="grid">
+      <div class="test-section">
+        <h3>Defaults (no attributes)</h3>
+        <progress-component></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>0% Progress</h3>
+        <progress-component
+          progress="0"
+          message="Not started"
+        ></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>50% Progress</h3>
+        <progress-component
+          progress="0.5"
+          message="Halfway there"
+        ></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>100% Progress</h3>
+        <progress-component
+          progress="1"
+          message="Complete"
+        ></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>Small (24px)</h3>
+        <progress-component
+          progress="0.6"
+          size="24"
+          message="Small indicator"
+        ></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>Large (200px)</h3>
+        <progress-component
+          progress="0.35"
+          size="200"
+          strokeWidth="20"
+          message="Large with thin stroke"
+        ></progress-component>
+      </div>
+    </div>
+
+    <!-- Section 3: CSS Custom Properties -->
+    <h2>3. CSS Custom Properties</h2>
+    <div class="grid">
+      <div class="test-section">
+        <h3>Custom colors</h3>
+        <progress-component
+          progress="0.7"
+          message="Blue theme"
+          style="--bg-color: #dbeafe; --fg-color: #2563eb; --color: #1e40af"
+        ></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>Error style</h3>
+        <progress-component
+          progress="0.3"
+          message="Something went wrong"
+          style="--bg-color: #fecaca; --fg-color: #dc2626; --color: #991b1b"
+        ></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>Success style</h3>
+        <progress-component
+          progress="1"
+          message="All done!"
+          style="--bg-color: #bbf7d0; --fg-color: #16a34a; --color: #166534"
+        ></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>Custom border &amp; font</h3>
+        <progress-component
+          progress="0.5"
+          message="Styled container"
+          style="
+            --border-style: dashed;
+            --border-radius: 16px;
+            --font-size: 18px;
+            --max-width: 400px;
+          "
+        ></progress-component>
+      </div>
+    </div>
+
+    <!-- Section 4: Edge Cases -->
+    <h2>4. Edge Cases</h2>
+    <div class="grid">
+      <div class="test-section">
+        <h3>Progress &gt; 1 (should clamp)</h3>
+        <progress-component
+          progress="5"
+          message="Clamped to 1"
+        ></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>Negative progress (should clamp)</h3>
+        <progress-component
+          progress="-0.5"
+          message="Clamped to 0"
+        ></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>Long message</h3>
+        <progress-component
+          progress="0.4"
+          message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+        ></progress-component>
+      </div>
+
+      <div class="test-section">
+        <h3>Empty message</h3>
+        <progress-component
+          progress="0.5"
+          message=""
+        ></progress-component>
+      </div>
+    </div>
+
+    <!-- Section 5: Message History -->
+    <h2>5. Message History</h2>
+    <div class="test-section">
+      <h3>Click the message to expand history — use the button to add messages</h3>
+      <progress-component
+        id="history-test"
+        progress="0.1"
+        message="Message 1"
+      ></progress-component>
+      <div style="margin-top: 12px">
+        <button id="btn-add-message">Add Next Message</button>
+        <span class="status" id="history-count">1 message(s) sent</span>
+      </div>
+    </div>
+
+    <!-- Section 6: Animated Progress -->
+    <h2>6. Animated Progress</h2>
+    <div class="test-section">
+      <h3>Simulates a real loading workflow</h3>
+      <progress-component
+        id="animated-target"
+        progress="0"
+        message="Ready to start"
+      ></progress-component>
+      <div style="margin-top: 12px">
+        <button id="btn-run-simulation">Run Simulation</button>
+        <button id="btn-reset-simulation">Reset</button>
+      </div>
+    </div>
+
+    <!-- Section 7: Accessibility -->
+    <h2>7. Accessibility Checklist</h2>
+    <div class="test-section">
+      <h3>Keyboard &amp; screen reader test</h3>
+      <progress-component
+        id="a11y-test"
+        progress="0.5"
+        message="Tab to this message, press Enter or Space to expand history"
+      ></progress-component>
+      <ul style="font-size: 14px; color: #555; margin-top: 16px">
+        <li>Tab to the message — it should receive visible focus</li>
+        <li>Press Enter or Space — message history should toggle</li>
+        <li>Check that <code>role="progressbar"</code> is on the SVG circle</li>
+        <li>
+          Check that <code>aria-valuenow</code> reflects current progress
+        </li>
+        <li>
+          Check that <code>aria-expanded</code> toggles on the message element
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      // Interactive controls
+      const el = document.getElementById('interactive');
+      const progressSlider = document.getElementById('ctrl-progress');
+      const progressVal = document.getElementById('ctrl-progress-val');
+      const sizeInput = document.getElementById('ctrl-size');
+      const strokeInput = document.getElementById('ctrl-stroke');
+      const messageInput = document.getElementById('ctrl-message');
+
+      progressSlider.addEventListener('input', () => {
+        el.progress = parseFloat(progressSlider.value);
+        progressVal.textContent = progressSlider.value;
+      });
+
+      sizeInput.addEventListener('input', () => {
+        el.size = parseInt(sizeInput.value, 10);
+      });
+
+      strokeInput.addEventListener('input', () => {
+        el.strokeWidth = parseInt(strokeInput.value, 10);
+      });
+
+      messageInput.addEventListener('input', () => {
+        el.message = messageInput.value;
+      });
+
+      // Preset buttons
+      [0, 25, 50, 75, 100].forEach((pct) => {
+        document.getElementById('btn-' + pct).addEventListener('click', () => {
+          const val = pct / 100;
+          el.progress = val;
+          progressSlider.value = val;
+          progressVal.textContent = val.toFixed(2);
+        });
+      });
+
+      // Animate button
+      document.getElementById('btn-animate').addEventListener('click', () => {
+        let val = 0;
+        const interval = setInterval(() => {
+          val += 0.01;
+          if (val > 1) {
+            val = 1;
+            clearInterval(interval);
+          }
+          el.progress = val;
+          progressSlider.value = val;
+          progressVal.textContent = val.toFixed(2);
+          el.message = 'Progress: ' + Math.round(val * 100) + '%';
+          messageInput.value = el.message;
+        }, 30);
+      });
+
+      // Message history test
+      const historyEl = document.getElementById('history-test');
+      const historyCount = document.getElementById('history-count');
+      let msgNum = 1;
+
+      document
+        .getElementById('btn-add-message')
+        .addEventListener('click', () => {
+          msgNum++;
+          historyEl.message = 'Message ' + msgNum;
+          historyEl.progress = Math.min(msgNum / 10, 1);
+          historyCount.textContent = msgNum + ' message(s) sent';
+        });
+
+      // Loading simulation
+      const simEl = document.getElementById('animated-target');
+      let simInterval = null;
+
+      const simSteps = [
+        { progress: 0, message: 'Initializing...' },
+        { progress: 0.1, message: 'Connecting to server...' },
+        { progress: 0.2, message: 'Authenticating...' },
+        { progress: 0.3, message: 'Fetching configuration...' },
+        { progress: 0.45, message: 'Loading resources...' },
+        { progress: 0.5, message: 'Processing data (1/4)...' },
+        { progress: 0.6, message: 'Processing data (2/4)...' },
+        { progress: 0.7, message: 'Processing data (3/4)...' },
+        { progress: 0.8, message: 'Processing data (4/4)...' },
+        { progress: 0.9, message: 'Finalizing...' },
+        { progress: 1, message: 'Complete!' },
+      ];
+
+      document
+        .getElementById('btn-run-simulation')
+        .addEventListener('click', function () {
+          this.disabled = true;
+          let step = 0;
+          if (simInterval) clearInterval(simInterval);
+
+          simInterval = setInterval(() => {
+            if (step >= simSteps.length) {
+              clearInterval(simInterval);
+              simInterval = null;
+              document.getElementById('btn-run-simulation').disabled = false;
+              return;
+            }
+            simEl.progress = simSteps[step].progress;
+            simEl.message = simSteps[step].message;
+            step++;
+          }, 600);
+        });
+
+      document
+        .getElementById('btn-reset-simulation')
+        .addEventListener('click', () => {
+          if (simInterval) {
+            clearInterval(simInterval);
+            simInterval = null;
+          }
+          simEl.progress = 0;
+          simEl.message = 'Ready to start';
+          document.getElementById('btn-run-simulation').disabled = false;
+        });
+    </script>
+  </body>
+</html>

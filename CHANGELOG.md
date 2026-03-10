@@ -1,4 +1,17 @@
-# @lit/lit-starter-ts
+# progress-component
+
+## [Unreleased]
+
+### Added
+
+- Interactive visual test page at `test/visual/index.html` for manually verifying component behavior
+- GitHub Actions workflow to deploy the visual test page to GitHub Pages
+- Documentation in README for running the test page locally and accessing the live version
+- Link to the visual test page from the root `index.html`
+
+---
+
+# @lit/lit-starter-ts (original template changelog)
 
 ## 2.0.2
 

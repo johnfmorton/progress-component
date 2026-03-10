@@ -1,0 +1,54 @@
+name: Deploy Visual Test Page to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx tsc
+
+      - name: Prepare Pages output
+        run: |
+          mkdir -p _site/test/visual
+          cp -r test/visual/* _site/test/visual/
+          cp progress-component.js _site/
+          cp progress-component.js.map _site/
+          mkdir -p _site/node_modules/@webcomponents/webcomponentsjs
+          cp node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js _site/node_modules/@webcomponents/webcomponentsjs/
+          mkdir -p _site/node_modules/lit
+          cp node_modules/lit/polyfill-support.js _site/node_modules/lit/
+          echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=test/visual/"></head></html>' > _site/index.html
+
+      - uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
