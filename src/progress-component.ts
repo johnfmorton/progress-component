@@ -20,6 +20,16 @@ export class ProgressComponent extends LitElement {
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .first-row .left-side {
+      width: calc(100% - 24px);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: start;
+      flex: 1;
       gap: 10px;
     }
     circle {
@@ -53,6 +63,16 @@ export class ProgressComponent extends LitElement {
     }
     .message:focus {
       outline: 2px solid blue;
+    }
+    .arrow {
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      display: flex;
+      align-content: center;
+    }
+    .arrow.expanded {
+      transform: rotate(180deg);
     }
   `;
 
@@ -94,10 +114,13 @@ export class ProgressComponent extends LitElement {
     }
   }
 
-  // Method to update the message history
+  // Method to update the message history, skipping consecutive duplicates
   private updateMessageHistory() {
-    // Add new message to the history
-    if (this.message) {
+    if (
+      this.message &&
+      (this.messageHistory.length === 0 ||
+        this.messageHistory[this.messageHistory.length - 1] !== this.message)
+    ) {
       this.messageHistory = [
         ...this.messageHistory.slice(-24), // Keep only the last 24 messages
         this.message,
@@ -118,44 +141,58 @@ export class ProgressComponent extends LitElement {
 
     return html`
     <div class="first-row">
-      <div role="progressbar" aria-valuenow="${
-        this.progress * 100
-      }" aria-valuemin="0" aria-valuemax="100" aria-label="Progress indicator">
-        <svg
-          width="${this.size}px"
-          height="${this.size}px"
-          viewBox="0 0 ${this.size} ${this.size}"
+      <div class="left-side">
+        <div role="progressbar" aria-valuenow="${
+          this.progress * 100
+        }" aria-valuemin="0" aria-valuemax="100" aria-label="Progress indicator">
+          <svg
+            width="${this.size}px"
+            height="${this.size}px"
+            viewBox="0 0 ${this.size} ${this.size}"
+          >
+            <circle
+              cx="${this.size / 2}"
+              cy="${this.size / 2}"
+              r="${radius}"
+              stroke="var(--bg-color, #b9b9b9)"
+              stroke-width="${this.calculatedStrokeWidth}"
+              fill="transparent"
+            ></circle>
+            <circle
+              cx="${this.size / 2}"
+              cy="${this.size / 2}"
+              r="${radius}"
+              stroke="var(--fg-color, #3f3f3f)"
+              stroke-width="${this.calculatedStrokeWidth}"
+              fill="transparent"
+              stroke-dasharray="${circumference}"
+              stroke-dashoffset="${offset}"
+            ></circle>
+          </svg>
+        </div>
+        <div
+          class="message"
+          tabindex="0"
+          role="button"
+          @click="${this.toggleExpand}"
+          @keydown="${this.handleKeydown}"
+          aria-expanded="${this.isExpanded}"
+          aria-label="Toggle message history"
         >
-          <circle
-            cx="${this.size / 2}"
-            cy="${this.size / 2}"
-            r="${radius}"
-            stroke="var(--bg-color, #b9b9b9)" /* Default background color */
-            stroke-width="${this.calculatedStrokeWidth}"
-            fill="transparent"
-          ></circle>
-          <circle
-            cx="${this.size / 2}"
-            cy="${this.size / 2}"
-            r="${radius}"
-            stroke="var(--fg-color, #3f3f3f)" /* Default foreground color */
-            stroke-width="${this.calculatedStrokeWidth}"
-            fill="transparent"
-            stroke-dasharray="${circumference}"
-            stroke-dashoffset="${offset}"
-          ></circle>
-        </svg>
+          ${this.message}
+        </div>
       </div>
       <div
-        class="message"
-        tabindex="0"
-        role="button"
+        class="arrow ${this.isExpanded ? 'expanded' : ''}"
         @click="${this.toggleExpand}"
-        @keydown="${this.handleKeydown}"
-        aria-expanded="${this.isExpanded}"
+        role="button"
+        tabindex="0"
         aria-label="Toggle message history"
+        @keydown="${this.handleKeydown}"
       >
-        ${this.message}
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 3.4 12 9.4 18 3.4"/>
+        </svg>
       </div>
     </div>
     <div class="history ${this.isExpanded ? 'expanded' : ''}">
