@@ -60,6 +60,7 @@ export class ProgressComponent extends LitElement {
     }
     .history.expanded {
       max-height: 500px; /* Limit expansion height, you can adjust this */
+      overflow-y: auto;
     }
     .message:focus {
       outline: 2px solid blue;

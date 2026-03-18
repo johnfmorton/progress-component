@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Expanded message history now scrolls when content exceeds max height instead of clipping
+
 ## [0.2.0] - 2026-03-10
 
 ### Added
