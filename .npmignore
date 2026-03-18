@@ -1,0 +1,27 @@
+# Source and config
+src/
+dev/
+docs/
+docs-src/
+test/
+rollup.config.js
+tsconfig.json
+web-dev-server.config.js
+web-test-runner.config.js
+index.html
+
+# Docs
+CHANGELOG.md
+README-original.md
+
+# Dotfiles and tooling
+.claude/
+.eleventy.cjs
+.eslintignore
+.eslintrc.json
+.github/
+.prettierrc.json
+.vscode/
+
+# Misc
+progress-component-overflow-bug.md
