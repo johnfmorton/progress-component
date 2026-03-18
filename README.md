@@ -4,6 +4,20 @@ This is a simple progress component built with [Lit](https://lit.dev/). It will 
 
 In addition, it stores that last 25 messages that were displayed, and allows the user to view them by clicking on the message to expland the message history.
 
+## Installation
+
+Install directly from GitHub:
+
+```bash
+npm install github:johnfmorton/progress-component
+```
+
+To install a specific version:
+
+```bash
+npm install github:johnfmorton/progress-component#v0.2.1
+```
+
 ## Visual Test Page
 
 An interactive test page is available for manually verifying the component works correctly. It covers property variations, CSS custom properties, edge cases, message history, animated progress, and accessibility.
