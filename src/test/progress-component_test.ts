@@ -15,8 +15,8 @@ suite('progress-component', () => {
     assert.instanceOf(el, ProgressComponent);
   });
 
-  describe('ProgressComponent', () => {
-    it('renders the component', async () => {
+  suite('ProgressComponent', () => {
+    test('renders the component', async () => {
       const el = await fixture(
         html`<progress-component></progress-component>`
       );
@@ -30,16 +30,24 @@ suite('progress-component', () => {
       el,
       `
       <div class="first-row">
-      <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progress indicator" aria-valuenow="0">
-        <svg width="100px" height="100px" viewBox="0 0 100 100">
-          <circle stroke="var(--bg-color, #b9b9b9)" *="" default="" background="" color="" fill="transparent" cx="50" cy="50" r="25" stroke-width="50"></circle>
-          <circle stroke="var(--fg-color, #3f3f3f)" *="" default="" foreground="" color="" fill="transparent" cx="50" cy="50" r="25" stroke-width="50" stroke-dasharray="157.07963267948966" stroke-dashoffset="157.07963267948966"></circle>
-        </svg>
+        <div class="left-side">
+          <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progress indicator" aria-valuenow="0">
+          </div>
+          <div class="message" tabindex="0" role="button" aria-label="Toggle message history" aria-expanded="false">
+            Idle status
+          </div>
+        </div>
+        <div class="arrow" role="button" tabindex="0" aria-label="Toggle message history">
+        </div>
       </div>
-      <div class="message" tabindex="0" role="button" aria-label="Toggle message history" aria-expanded="false">
-        Idle status
+      <div class="history">
+        <div class="intro">
+          Message history:
+        </div>
+        <div>
+          Idle status
+        </div>
       </div>
-    </div>
     `
     );
   });
