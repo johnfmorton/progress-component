@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-03-18
+
 ### Fixed
 
 - Expanded message history now scrolls when content exceeds max height instead of clipping
@@ -26,4 +28,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 - Inline CSS comments from SVG stroke attributes
 
+[0.2.1]: https://github.com/johnfmorton/progress-component/releases/tag/v0.2.1
 [0.2.0]: https://github.com/johnfmorton/progress-component/releases/tag/v0.2.0
