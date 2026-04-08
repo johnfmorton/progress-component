@@ -67,5 +67,12 @@
     "rollup-plugin-summary": "^2.0.1",
     "typescript": "~5.5.0"
   },
-  "customElements": "custom-elements.json"
+  "customElements": "custom-elements.json",
+  "overrides": {
+    "liquidjs": "^10.25.5",
+    "picomatch@<2.3.2": "^2.3.2",
+    "picomatch@>=4.0.0 <4.0.4": "^4.0.4",
+    "serialize-javascript": "^7.0.5",
+    "brace-expansion@1": "^1.1.13"
+  }
 }
